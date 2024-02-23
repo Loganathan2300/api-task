@@ -8,7 +8,7 @@ import { CONSTANT } from "../constant";
 import InputField from "../component/InputField";
 import Button from "../component/Button";
 
-const DashBoard = () => {
+const DashBoard = ({spinner,setSpinner}) => {
   const [user, setUser] = useState([]);
   const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
   const [editValue,setEditValue]=useState("")
@@ -16,7 +16,7 @@ const DashBoard = () => {
   const[editShow,setEditShow]=useState(false)
   const [id,setId]=useState()
 
-  const handelClose = () => setShow(false);
+  const handelClose = () =>{ setShow(false); setInputValue(CONSTANT.INIT_INPUT_VALUE);};
   const handelshow = () => setShow(true);
 
   const edithandelClose =()=> setEditShow(false)
@@ -32,7 +32,8 @@ const DashBoard = () => {
   };
 
   const addUserDetails = (e) => {
-    setInputValue({ ...inputValues, [e.target.name]: e.target.value });
+    console.log(e,"dsdfgfdg");
+    setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
   };
 
   const editUserDetails = (e) => {
@@ -49,6 +50,7 @@ const DashBoard = () => {
       })
       .then((res) => {
         setUser(res.data);
+        setSpinner(false);
       })
       .catch((error) => {
         console.error("Error fetching users:", error);
@@ -58,7 +60,7 @@ const DashBoard = () => {
   useEffect(() => {
     getValue();
   }, []);
-
+  
   const postValue = () => {
     axios
       .post("https://gorest.co.in/public/v2/users", inputValues, {
@@ -115,6 +117,7 @@ const DashBoard = () => {
         user={user}
         onclickEdit={editHandleShow}
         onClickDelete={deleteValue}
+        spinner={spinner}
       />
       <Model
         show={show}
