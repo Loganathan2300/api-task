@@ -11,17 +11,33 @@ import Button from "../component/Button";
 const DashBoard = () => {
   const [user, setUser] = useState([]);
   const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
-  const [show, setShow] = useState({add:false,edit:false});
-  const [searchTeams,setSearchTeams]=useState()
- 
+  const [editValue,setEditValue]=useState("")
+  const [show, setShow] = useState(false);
+  const[editShow,setEditShow]=useState(false)
+  const [id,setId]=useState()
+
   const handelClose = () => setShow(false);
   const handelshow = () => setShow(true);
+
+  const edithandelClose =()=> setEditShow(false)
+  const editHandleShow = (val) => {
+    setEditShow(true);
+    setEditValue({
+      name: val.name,
+      email: val.email,
+      gender: val.gender,
+      status: val.status,
+    });
+    setId(val.id);
+  };
 
   const addUserDetails = (e) => {
     setInputValue({ ...inputValues, [e.target.name]: e.target.value });
   };
 
-  const editUserDetails = () => {};
+  const editUserDetails = (e) => {
+    setEditValue({...editValue,[e.target.name]:e.target.value})
+  };
 
   const getValue = () => {
     axios
@@ -52,30 +68,53 @@ const DashBoard = () => {
         },
       })
       .then((response) => {
-        handelClose();
-        setInputValue(CONSTANT.INIT_INPUT_VALUE);
-        getValue();
+          handelClose();
+          setInputValue(CONSTANT.INIT_INPUT_VALUE);
+          getValue();
       })
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
   };
-
+  const putValue=()=>{
+    axios.put(`https://gorest.co.in/public/v2/users/${id}`, editValue, {
+        headers: {
+          Authorization:
+            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
+        },
+      })
+      .then((res)=>{
+        setEditShow(false);
+        getValue();
+      })
+  }
+  const deleteValue = (id) => {
+    axios
+      .delete(`https://gorest.co.in/public/v2/users/${id}`, {
+        headers: {
+          Authorization:
+            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
+        },
+      })
+      .then(() => {
+        getValue();
+        alert("successful deleted ....");
+      });
+  };
   return (
     <div>
         <div className="row">
             <div className="col-6 ">
-                <InputField type={CONSTANT.INIT_INPUT_VALUE.type} onChange={searchTeams} value={(e)=>setSearchTeams(e.target.value)} />
+                {/* <InputField type={CONSTANT.INIT_INPUT_VALUE.type} onChange={searchTeams} value={} /> */}
                 </div>
                 <div className="col-6 text-end">
-                <Button addUserName='Add User' OnclickAddUser={addUserDetails} className='px-4 py-2 my-4 text-end rounded-2 border-0 text-bg-primary'/>
+                <Button addUserName='Add User' onClick={handelshow} className='px-4 py-2 my-4 rounded-2 border-0 text-bg-primary'/>
             </div>
       </div>
       <Table
         user={user}
-        setShow={setShow}
-        show={show}
-        onclickEdit={editUserDetails}
+        onclickEdit={editHandleShow}
+        onClickDelete={deleteValue}
       />
       <Model
         show={show}
@@ -96,18 +135,18 @@ const DashBoard = () => {
           </>
         }
       />
-      {/* <Model
-        show={show}
-        onClick={handelClose}
-        onHide={handelClose}
-        onclick1={postValue}
-        title="Add user"
+      <Model
+        show={editShow}
+        onClick={edithandelClose}
+        onHide={edithandelClose}
+        onclick1={putValue}
+        title="Edit user"
         button1="Clear"
         button2="Submit"
         body={<>
-        <Forms type='text' onChange={addUserDetails} value={inputValues} name="name"/>
+        <Forms type='text' onChange={editUserDetails} value={editValue} name="name"/>
         </>}
-      /> */}
+      />
     </div>
   );
 };
