@@ -4,15 +4,20 @@ import Layout from './Layout';
 import Dashboard from './pages/DashBoard';
 import Name from './pages/Name';
 import { useState } from 'react';
+import Email from './pages/Email';
+import Error from './pages/Error';
 function App() {
   const [spinner,setSpinner]= useState(true);
   return (
     <div>
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Layout/>}>
-            <Route path='dashboard-page' element={<Dashboard spinner={spinner} setSpinner={setSpinner} />}/>
-            <Route path='name-page' element={<Name/>}/>
+          <Route path='/' element={<Layout />}>
+            <Route path='/dashboard-page' element={<Dashboard  spinner={spinner} setSpinner={setSpinner} />}/>
+            <Route path='/name-page' element={<Name  />}/>
+            <Route path='/email-page' element={<Email  />}/>
+            <Route path='*' element={<Error/>}/>
+            {/* <Route path='*' element={<Navigate to="/404"/>}/> */}
           </Route>
         </Routes>
       </BrowserRouter>

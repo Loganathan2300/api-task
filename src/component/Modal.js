@@ -10,21 +10,20 @@ const Model = ({
     button1,
     button2,
     onclick1,
-    className,
   }) => {
   return (
-    <div>
+    <div  >
       <Modal
         show={show}
         onHide={onHide}
         backdrop="static"
         keyboard={false}
-        className={className}
-      >
+        className='' 
+        >
         <Modal.Header closeButton >
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{body}</Modal.Body>
+        <Modal.Body className='mb-2'>{body}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={onClick}>
             {button1}

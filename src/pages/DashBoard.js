@@ -7,7 +7,9 @@ import Forms from "../component/Forms";
 import { CONSTANT } from "../constant";
 import InputField from "../component/InputField";
 import Button from "../component/Button";
+import Pagenation from "../component/Pagenation";
 
+const itemPage =5
 const DashBoard = ({spinner,setSpinner}) => {
   const [user, setUser] = useState([]);
   const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
@@ -15,6 +17,8 @@ const DashBoard = ({spinner,setSpinner}) => {
   const [show, setShow] = useState(false);
   const[editShow,setEditShow]=useState(false)
   const [id,setId]=useState()
+  const [search,setSearch]=useState("")
+  const [pageChange,setPageChange]=useState(1)
 
   const handelClose = () =>{ setShow(false); setInputValue(CONSTANT.INIT_INPUT_VALUE);};
   const handelshow = () => setShow(true);
@@ -30,9 +34,24 @@ const DashBoard = ({spinner,setSpinner}) => {
     });
     setId(val.id);
   };
+  //  Filter data based on search...
+  const filterData = user.filter((item) =>
+  Object.values(item).some((value) =>
+    String(value).toLowerCase().includes(search.toLowerCase())
+  )
+);
+ //for pagechange code start
+ const pageLength = filterData.length;
+ const totalPages = Math.ceil(pageLength / itemPage);
+ const dataShowDetail = filterData.slice((pageChange - 1) * itemPage, pageChange * itemPage);
+//  const startingNumnber = (pageChange - 1) * itemPage + 1;
+
+ let pages = [];
+ for (let i = 1; i <= totalPages; i++) {
+   pages.push(i);
+ }
 
   const addUserDetails = (e) => {
-    console.log(e,"dsdfgfdg");
     setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
   };
 
@@ -59,7 +78,7 @@ const DashBoard = ({spinner,setSpinner}) => {
 
   useEffect(() => {
     getValue();
-  }, []);
+  });
   
   const postValue = () => {
     axios
@@ -104,21 +123,22 @@ const DashBoard = ({spinner,setSpinner}) => {
       });
   };
   return (
-    <div>
-        <div className="row">
+    <div className="container-fulid card my-5 ">
+        <div className=" row">
             <div className="col-6 ">
-                {/* <InputField type={CONSTANT.INIT_INPUT_VALUE.type} onChange={searchTeams} value={} /> */}
+                <InputField type={CONSTANT.INIT_INPUT_VALUE.type} placeholder="Search..." onChange={(e)=>setSearch(e.target.value)} value={search} className='px-2 py-1 mx-2 p-0 w-50'/>
                 </div>
-                <div className="col-6 text-end">
-                <Button addUserName='Add User' onClick={handelshow} className='px-4 py-2 my-4 rounded-2 border-0 text-bg-primary'/>
+                <div className="col-6">
+                <Button addUserName='Add User' onClick={handelshow} />
             </div>
       </div>
       <Table
-        user={user}
+        user={dataShowDetail}
         onclickEdit={editHandleShow}
         onClickDelete={deleteValue}
         spinner={spinner}
       />
+      <Pagenation pages={pages} setPageChange={setPageChange} />
       <Model
         show={show}
         onClick={handelClose}

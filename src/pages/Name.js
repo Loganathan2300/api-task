@@ -2,7 +2,7 @@ import React from 'react'
 
 const Name = () => {
   return (
-    <div>Name</div>
+    <div>LOGU</div>
   )
 }
 

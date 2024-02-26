@@ -11,5 +11,6 @@ export const CONSTANT = {
     gender: "",
     status: "",
   },
-  headerColum: ["EDIT","NAME", "EMAIL", "GENDER", "STATUS","DELETE"]
+  headerColum: ["EDIT","NAME", "EMAIL", "GENDER", "STATUS","DELETE"],
+  //EDIT_GET_VALUE :{}
 };
