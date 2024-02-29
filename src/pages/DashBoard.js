@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Table from "../component/Table";
 import axios from "axios";
-// import InputField from "../component/InputField";
+import Table from "../component/Table";
 import Model from "../component/Modal";
 import Forms from "../component/Forms";
 import { CONSTANT } from "../constant";
@@ -19,21 +18,17 @@ const DashBoard = ({spinner,setSpinner}) => {
   const [id,setId]=useState()
   const [search,setSearch]=useState("")
   const [pageChange,setPageChange]=useState(1)
-
   const handelClose = () =>{ setShow(false); setInputValue(CONSTANT.INIT_INPUT_VALUE);};
   const handelshow = () => setShow(true);
-
-  const edithandelClose =()=> setEditShow(false)
+  const edithandelClose =()=> setEditShow(false);
   const editHandleShow = (val) => {
     setEditShow(true);
-    setEditValue({
-      name: val.name,
-      email: val.email,
-      gender: val.gender,
-      status: val.status,
-    });
+    setEditValue(val); 
     setId(val.id);
   };
+  const dropDown =(val)=>{
+    setId(val.id);
+  }
   //  Filter data based on search...
   const filterData = user.filter((item) =>
   Object.values(item).some((value) =>
@@ -58,7 +53,6 @@ const DashBoard = ({spinner,setSpinner}) => {
   const editUserDetails = (e) => {
     setEditValue({...editValue,[e.target.name]:e.target.value})
   };
-
   const getValue = () => {
     axios
       .get("https://gorest.co.in/public/v2/users", {
@@ -78,7 +72,7 @@ const DashBoard = ({spinner,setSpinner}) => {
 
   useEffect(() => {
     getValue();
-  });
+  },[]);
   
   const postValue = () => {
     axios
@@ -97,8 +91,8 @@ const DashBoard = ({spinner,setSpinner}) => {
         console.error("Error fetching users:", error);
       });
   };
-  const putValue=()=>{
-    axios.put(`https://gorest.co.in/public/v2/users/${id}`, editValue, {
+  const putValue=(val)=>{
+    axios.put(`https://gorest.co.in/public/v2/users/${id}`,val.length?{status:val}:editValue, {
         headers: {
           Authorization:
             "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
@@ -107,7 +101,7 @@ const DashBoard = ({spinner,setSpinner}) => {
       .then((res)=>{
         setEditShow(false);
         getValue();
-      })
+      }).catch((err)=>console.log(err))
   }
   const deleteValue = (id) => {
     axios
@@ -119,7 +113,6 @@ const DashBoard = ({spinner,setSpinner}) => {
       })
       .then(() => {
         getValue();
-        alert("successful deleted ....");
       });
   };
   return (
@@ -134,7 +127,12 @@ const DashBoard = ({spinner,setSpinner}) => {
       </div>
       <Table
         user={dataShowDetail}
+        putValue={putValue}
+        show={true}
+        id={id}
+        onclick={dropDown}
         onclickEdit={editHandleShow}
+
         onClickDelete={deleteValue}
         spinner={spinner}
       />
@@ -147,19 +145,14 @@ const DashBoard = ({spinner,setSpinner}) => {
         title="Add user"
         button1="Clear"
         button2="Submit"
-        body={
-          <>
-            <Forms
-              type="text"
-              onChange={addUserDetails}
-              value={inputValues}
-              name="name"
-            />
+        body={<>
+            <Forms type="text" onChange={addUserDetails} value={inputValues} name="name" />
           </>
         }
       />
       <Model
         show={editShow}
+        id={id}
         onClick={edithandelClose}
         onHide={edithandelClose}
         onclick1={putValue}
@@ -167,7 +160,7 @@ const DashBoard = ({spinner,setSpinner}) => {
         button1="Clear"
         button2="Submit"
         body={<>
-        <Forms type='text' onChange={editUserDetails} value={editValue} name="name"/>
+        <Forms type='text' onChange={editUserDetails} value={editValue}  name="name"/>
         </>}
       />
     </div>

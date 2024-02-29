@@ -1,5 +1,6 @@
 import React from 'react'
 import { Button, Modal } from "react-bootstrap";
+import Forms from './Forms';
 
 const Model = ({
     onClick,
@@ -28,11 +29,12 @@ const Model = ({
           <Button variant="secondary" onClick={onClick}>
             {button1}
           </Button>
-          <Button variant="primary" onClick={onclick1} type="submit">
+          <Button variant="primary" onClick={onclick1}  type="submit">
             {button2}
           </Button>
         </Modal.Footer>
       </Modal>
+      {/* <Forms isSubmitting={isSubmitting}/> */}
     </div>
   )
 }
