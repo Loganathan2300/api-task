@@ -47,31 +47,31 @@ const Table = ({ user, onclickEdit, onClickDelete, spinner,putValue,show,onclick
               <tbody>
                 {user.length&&user.map((item,i) => (
                   <tr key={i}  >
-                  {show?<td>
+                  {show&&<td>
                       <button
                         className="border-0 bg-transparent fs-6 text-success"
                         onClick={() => onclickEdit(item)}
                       >
                         <Icon icon="clarity:edit-line" />
                       </button>
-                    </td>:<></>}
+                    </td>}
                     <td>{item.name}</td>
                     <td>{item.email}</td>
                     <td>{item.gender}</td>
-                    <td onClick={() => onclick(item)} >
+                    <td onClick={() => onclick(item)}>
                       {show?<select class="form-select drapdown" value={item.status} onChange={(e)=>putValue(e.target.value)}>
                         <option value="active">Active</option>
                         <option value="inactive">InActive</option>
                       </select>:item.status}
                     </td>
-                    {show?<td>
+                    {show&&<td>
                       <button
                         className="border-0 bg-transparent fs-6 text-danger"
                         onClick={() => showDeleteConfirmation(item.id)}
                       >
                         <Icon icon="mdi-light:delete" />
                       </button>
-                    </td>:<></>}
+                    </td>}
                   </tr>
                 ))}
               </tbody>

@@ -40,16 +40,13 @@ const DashBoard = ({spinner,setSpinner}) => {
  const totalPages = Math.ceil(pageLength / itemPage);
  const dataShowDetail = filterData.slice((pageChange - 1) * itemPage, pageChange * itemPage);
 //  const startingNumnber = (pageChange - 1) * itemPage + 1;
-
  let pages = [];
  for (let i = 1; i <= totalPages; i++) {
    pages.push(i);
  }
-
   const addUserDetails = (e) => {
     setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
   };
-
   const editUserDetails = (e) => {
     setEditValue({...editValue,[e.target.name]:e.target.value})
   };
@@ -69,11 +66,9 @@ const DashBoard = ({spinner,setSpinner}) => {
         console.error("Error fetching users:", error);
       });
   };
-
   useEffect(() => {
     getValue();
   },[]);
-  
   const postValue = () => {
     axios
       .post("https://gorest.co.in/public/v2/users", inputValues, {
@@ -132,7 +127,6 @@ const DashBoard = ({spinner,setSpinner}) => {
         id={id}
         onclick={dropDown}
         onclickEdit={editHandleShow}
-
         onClickDelete={deleteValue}
         spinner={spinner}
       />
@@ -143,7 +137,7 @@ const DashBoard = ({spinner,setSpinner}) => {
         onHide={handelClose}
         onclick1={postValue}
         title="Add user"
-        button1="Clear"
+        button1="Cancel"
         button2="Submit"
         body={<>
             <Forms type="text" onChange={addUserDetails} value={inputValues} name="name" />
@@ -157,7 +151,7 @@ const DashBoard = ({spinner,setSpinner}) => {
         onHide={edithandelClose}
         onclick1={putValue}
         title="Edit user"
-        button1="Clear"
+        button1="Cancel"
         button2="Submit"
         body={<>
         <Forms type='text' onChange={editUserDetails} value={editValue}  name="name"/>

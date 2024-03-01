@@ -1,11 +1,11 @@
-import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import Table from '../component/Table';
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import Table from "../component/Table";
 
 const Email = () => {
-  const params =useParams()
-  const[userEmail,setUserEmail]=useState([])
+  const params = useParams();
+  const [userEmail, setUserEmail] = useState([]);
   const getValue = () => {
     axios
       .get(`https://gorest.co.in/public/v2/users/${params.id}`, {
@@ -20,13 +20,16 @@ const Email = () => {
       .catch((error) => {
         console.error("Error fetching users:", error);
       });
-    };
+  };
   useEffect(() => {
     getValue();
-  },[params]);
+  }, [params]);
   return (
-    <div className='py-5 my-5'><Table user={[userEmail]} show={false} /></div>
-  )
-}
+    <div className="py-5 my-5">
+      <div className="mx-2 fs-2">User Email</div>
+      <Table user={[userEmail]} show={false} />
+    </div>
+  );
+};
 
-export default Email
+export default Email;

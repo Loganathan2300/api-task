@@ -47,8 +47,7 @@ const SideBar = () => {
           >
             <Link
               to="dashboard-page"
-              className="text-decoration-none px-3 text-dark"
-              style={{ cursor: "pointer", fontSize: "" }}
+              className="text-decoration-none px-3 text-dark point"
               onClick={() => {
                 setActiveSection("dashboard-page");
               }}
@@ -67,16 +66,15 @@ const SideBar = () => {
           <Accordion.Body className="p-0 m-0">
             {user.length &&
               user.map((u, id) => (
-                <p className="ms-3 mb-1" key={id}>
+                <p className="ms-3 mb-1 mt-1" key={id}>
                   <input
-                    style={{ fontSize: "3px" }}
                     type="radio"
                     id={id}
                     className="me-1"
                     name="name"
                     onChange={() => handleCheckboxChange(u.id)}
                   />
-                  {u.name}
+                  <span className="fs">{u.name}</span>
                 </p>
               ))}
           </Accordion.Body>
@@ -86,15 +84,14 @@ const SideBar = () => {
           <Accordion.Body>
             {user.length &&
               user.map((u, id) => (
-                <p key={id} style={{ fontSize: "13px" }}>
+                <p key={id}>
                   <input
-                    style={{ fontSize: "px" }}
                     type="radio"
                     className="me-1"
                     name="email"
                     onChange={() => handleCheckboxEmail(u.id)}
                   />
-                  {u.email}
+                  <span className="fs">{u.email}</span>
                 </p>
               ))}
           </Accordion.Body>
@@ -103,9 +100,8 @@ const SideBar = () => {
       <div className="row">
         <div className="col-2">
           <button
-            className="btn btn-danger mx-5 my-5"
+            className="btn btn-danger point mx-2 "
             onClick={handleReset}
-            style={{ cursor: "pointer" }}
           >
             Reset
           </button>

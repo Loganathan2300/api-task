@@ -5,3 +5,10 @@
 /* .btn{
     position: ;
 } */
+.point{
+    cursor: pointer;
+    margin-top: 350px;
+}
+.fs{
+     font-size:13px ;
+}
