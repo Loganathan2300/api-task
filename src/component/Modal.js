@@ -1,7 +1,5 @@
 import React from 'react'
 import { Button, Modal } from "react-bootstrap";
-import Forms from './Forms';
-
 const Model = ({
     onClick,
     onHide,
@@ -25,16 +23,15 @@ const Model = ({
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
         <Modal.Body className='mb-2'>{body}</Modal.Body>
-        <Modal.Footer>
+        {/* <Modal.Footer>
           <Button variant="secondary" onClick={onClick}>
             {button1}
           </Button>
-          <Button variant="primary" onClick={onclick1}  type="submit">
+          <Button variant="primary" onClick={onclick1} type="submit">
             {button2}
           </Button>
-        </Modal.Footer>
+        </Modal.Footer> */}
       </Modal>
-      {/* <Forms isSubmitting={isSubmitting}/> */}
     </div>
   )
 }

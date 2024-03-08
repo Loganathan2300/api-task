@@ -31,10 +31,10 @@ const SideBar = () => {
   const handleCheckboxEmail = (e) => {
     Navigate(`/email-page/${e}`);
   };
-  const handleReset = () => {
-    setActiveSection("dashboard-page");
-    Navigate('/dashboard-page');
-  };
+  // const handleReset = () => {
+  //   setActiveSection("dashboard-page");
+  //   Navigate('/dashboard-page');
+  // };
 
   return (
     <div className="vh-100 ">
@@ -97,7 +97,7 @@ const SideBar = () => {
           </Accordion.Body>
         </Accordion.Item>
       </Accordion>
-      <div className="row">
+      {/* <div className="row">
         <div className="col-2">
           <button
             className="btn btn-danger point mx-2 "
@@ -106,7 +106,7 @@ const SideBar = () => {
             Reset
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

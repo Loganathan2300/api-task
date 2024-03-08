@@ -11,14 +11,14 @@ import Pagenation from "../component/Pagenation";
 const itemPage =5
 const DashBoard = ({spinner,setSpinner}) => {
   const [user, setUser] = useState([]);
-  const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
+  // const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
   const [editValue,setEditValue]=useState("")
   const [show, setShow] = useState(false);
   const[editShow,setEditShow]=useState(false)
   const [id,setId]=useState()
   const [search,setSearch]=useState("")
   const [pageChange,setPageChange]=useState(1)
-  const handelClose = () =>{ setShow(false); setInputValue(CONSTANT.INIT_INPUT_VALUE);};
+  const handelClose = () =>{ setShow(false)};
   const handelshow = () => setShow(true);
   const edithandelClose =()=> setEditShow(false);
   const editHandleShow = (val) => {
@@ -44,9 +44,9 @@ const DashBoard = ({spinner,setSpinner}) => {
  for (let i = 1; i <= totalPages; i++) {
    pages.push(i);
  }
-  const addUserDetails = (e) => {
-    setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
-  };
+  // const addUserDetails = (e) => {
+  //   setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
+  // };
   const editUserDetails = (e) => {
     setEditValue({...editValue,[e.target.name]:e.target.value})
   };
@@ -69,9 +69,10 @@ const DashBoard = ({spinner,setSpinner}) => {
   useEffect(() => {
     getValue();
   },[]);
-  const postValue = () => {
+  const postValue = (values) => {
+    console.log(values,"hgcvjcshcjhsd")
     axios
-      .post("https://gorest.co.in/public/v2/users", inputValues, {
+      .post("https://gorest.co.in/public/v2/users",values, {
         headers: {
           Authorization:
             "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
@@ -79,7 +80,7 @@ const DashBoard = ({spinner,setSpinner}) => {
       })
       .then((response) => {
           handelClose();
-          setInputValue(CONSTANT.INIT_INPUT_VALUE);
+          // setInputValue(CONSTANT.INIT_INPUT_VALUE);
           getValue();
       })
       .catch((error) => {
@@ -87,7 +88,7 @@ const DashBoard = ({spinner,setSpinner}) => {
       });
   };
   const putValue=(val)=>{
-    axios.put(`https://gorest.co.in/public/v2/users/${id}`,val.length?{status:val}:editValue, {
+    axios.put(`https://gorest.co.in/public/v2/users/${id}`,val, {
         headers: {
           Authorization:
             "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
@@ -133,28 +134,26 @@ const DashBoard = ({spinner,setSpinner}) => {
       <Pagenation pages={pages} setPageChange={setPageChange} />
       <Model
         show={show}
-        onClick={handelClose}
         onHide={handelClose}
-        onclick1={postValue}
         title="Add user"
         button1="Cancel"
         button2="Submit"
         body={<>
-            <Forms type="text" onChange={addUserDetails} value={inputValues} name="name" />
-          </>
+        <Forms type="text" name="name" onclick={handelClose} onclick1={postValue}/>
+        </>
         }
       />
       <Model
         show={editShow}
         id={id}
-        onClick={edithandelClose}
+        // onClick={edithandelClose}
         onHide={edithandelClose}
-        onclick1={putValue}
+        // onclick1={putValue}
         title="Edit user"
         button1="Cancel"
         button2="Submit"
         body={<>
-        <Forms type='text' onChange={editUserDetails} value={editValue}  name="name"/>
+        <Forms type='text' value={editValue} name="name" onclick={edithandelClose} onclick1={putValue} />
         </>}
       />
     </div>

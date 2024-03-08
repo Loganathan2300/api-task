@@ -13,12 +13,13 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Layout />}>
-            <Route path='/dashboard-page' element={<Dashboard  spinner={spinner} setSpinner={setSpinner} />}/>
+            <Route path='/dashboard-page' element={<Dashboard  spinner={spinner} setSpinner={setSpinner}/>}/>
             <Route path='/name-page/:id' element={<Name/>}/>
             <Route path='/email-page/:id' element={<Email/>}/>
-            <Route path='*' element={<Error/>}/>
+            
             {/* <Route path='*' element={<Navigate to="/404"/>}/> */}
           </Route>
+          <Route path='*' element={<Error/>}/>
         </Routes>
       </BrowserRouter>
     </div>

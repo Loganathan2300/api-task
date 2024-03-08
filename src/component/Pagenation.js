@@ -20,7 +20,7 @@ const Pagenation = ({pages,setPageChange}) => {
             <ul className="pagination justify-content-center mb-2 my-2">
             {pages.map((pageNumber) => (
               <li key={pageNumber} className="page-item">
-                <button className="page-link" onClick={() => setPageChange(pageNumber)}>
+                <button className="page-link Active" onClick={() => setPageChange(pageNumber)}>
                   {pageNumber}
                 </button>
               </li>
