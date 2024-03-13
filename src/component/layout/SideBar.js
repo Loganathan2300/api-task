@@ -6,7 +6,7 @@ import "../../utils/Sidebar.css";
 const SideBar = () => {
   const Navigate = useNavigate();
   const [user, setUser] = useState([]);
-  const [activeSection, setActiveSection] = useState("dashboard-page");
+  const [activeSection, setActiveSection] = useState("/home/dashboard-page");
   const getValue = () => {
     axios
       .get("https://gorest.co.in/public/v2/users", {
@@ -26,10 +26,10 @@ const SideBar = () => {
     getValue();
   }, []);
   const handleCheckboxChange = (e) => {
-    Navigate(`/name-page/${e}`);
+    Navigate(`/home/name-page/${e}`);
   };
   const handleCheckboxEmail = (e) => {
-    Navigate(`/email-page/${e}`);
+    Navigate(`/home/email-page/${e}`);
   };
   // const handleReset = () => {
   //   setActiveSection("dashboard-page");
@@ -42,14 +42,14 @@ const SideBar = () => {
         <Accordion.Item eventKey="0" className="border-0">
           <p
             className={`${
-              activeSection === "dashboard-page" ? "bg-light" : "bg-light"
+              activeSection === "/Home/dashboard-page" ? "bg-light" : "bg-light"
             } py-3 pb-2 m-0`}
           >
             <Link
-              to="dashboard-page"
+              to="/Home/dashboard-page"
               className="text-decoration-none px-3 text-dark point"
               onClick={() => {
-                setActiveSection("dashboard-page");
+                setActiveSection("/Home/dashboard-page");
               }}
             >
               DashBoard
@@ -58,7 +58,7 @@ const SideBar = () => {
         </Accordion.Item>
         <Accordion.Item eventKey="1" className="border-0 ">
           <Accordion.Header
-            onClick={() => setActiveSection("name-page")}
+            onClick={() => setActiveSection("/Home/name-page")}
             className="bg-light"
           >
             Name

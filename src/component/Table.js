@@ -45,7 +45,8 @@ const Table = ({ user, onclickEdit, onClickDelete, spinner,putValue,show,onclick
                 </tr>
               </thead>
               <tbody>
-                {user.length&&user.map((item,i) => (
+              {/* {user.length&&user.map((item,i) => ( */}
+                {user.map((item,i) => (
                   <tr key={i}  >
                   {show&&<td>
                       <button

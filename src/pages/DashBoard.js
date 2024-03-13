@@ -7,11 +7,14 @@ import { CONSTANT } from "../constant";
 import InputField from "../component/InputField";
 import Button from "../component/Button";
 import Pagenation from "../component/Pagenation";
+import instance from "../global/Interceptor";
 
+// require('dotenv').config()
 const itemPage =5
 const DashBoard = ({spinner,setSpinner}) => {
+
+  // console.log(process.env.BASE_URL ,"text bbnnnj")
   const [user, setUser] = useState([]);
-  // const [inputValues, setInputValue] = useState(CONSTANT.INIT_INPUT_VALUE);
   const [editValue,setEditValue]=useState("")
   const [show, setShow] = useState(false);
   const[editShow,setEditShow]=useState(false)
@@ -44,21 +47,13 @@ const DashBoard = ({spinner,setSpinner}) => {
  for (let i = 1; i <= totalPages; i++) {
    pages.push(i);
  }
-  // const addUserDetails = (e) => {
-  //   setInputValue({ ...inputValues, [e.target.name]: e.target.value }); 
-  // };
   const editUserDetails = (e) => {
     setEditValue({...editValue,[e.target.name]:e.target.value})
   };
   const getValue = () => {
-    axios
-      .get("https://gorest.co.in/public/v2/users", {
-        headers: {
-          Authorization:
-            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
-        },
-      })
+    instance.get("/v2/users")
       .then((res) => {
+        console.log(res,"res")
         setUser(res.data);
         setSpinner(false);
       })
@@ -70,17 +65,9 @@ const DashBoard = ({spinner,setSpinner}) => {
     getValue();
   },[]);
   const postValue = (values) => {
-    console.log(values,"hgcvjcshcjhsd")
-    axios
-      .post("https://gorest.co.in/public/v2/users",values, {
-        headers: {
-          Authorization:
-            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
-        },
-      })
+    instance.post("/v2/users",values)
       .then((response) => {
           handelClose();
-          // setInputValue(CONSTANT.INIT_INPUT_VALUE);
           getValue();
       })
       .catch((error) => {
@@ -88,25 +75,15 @@ const DashBoard = ({spinner,setSpinner}) => {
       });
   };
   const putValue=(val)=>{
-    axios.put(`https://gorest.co.in/public/v2/users/${id}`,val, {
-        headers: {
-          Authorization:
-            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
-        },
-      })
+    instance.put(`/v2/users/${id}`,val) 
       .then((res)=>{
         setEditShow(false);
         getValue();
       }).catch((err)=>console.log(err))
   }
   const deleteValue = (id) => {
-    axios
-      .delete(`https://gorest.co.in/public/v2/users/${id}`, {
-        headers: {
-          Authorization:
-            "Bearer 8b0977e6f9372784a4e885e802cd121e86ad7db2a37f2c4d6831dd5dd5e2d36c",
-        },
-      })
+    instance
+      .delete(`/v2/users/${id}`)
       .then(() => {
         getValue();
       });
@@ -136,8 +113,6 @@ const DashBoard = ({spinner,setSpinner}) => {
         show={show}
         onHide={handelClose}
         title="Add user"
-        button1="Cancel"
-        button2="Submit"
         body={<>
         <Forms type="text" name="name" onclick={handelClose} onclick1={postValue}/>
         </>
@@ -146,9 +121,7 @@ const DashBoard = ({spinner,setSpinner}) => {
       <Model
         show={editShow}
         id={id}
-        // onClick={edithandelClose}
         onHide={edithandelClose}
-        // onclick1={putValue}
         title="Edit user"
         button1="Cancel"
         button2="Submit"

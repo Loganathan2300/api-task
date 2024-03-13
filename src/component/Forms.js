@@ -30,20 +30,21 @@ const Forms = ({value, onclick, onclick1 }) => {
       {({ isSubmitting,errors,values,handleChange}) => (
         <Form disabled={isSubmitting}>
           {CONSTANT.USER_INPUT_VALUE.map((item, i) => (
-            <div key={i} className='mb-3'>
+            <div key={i} className='mb-1 '>
               <InputField
                 type={item.type}
                 onChange={handleChange}
                 value={values[item.name]}
                 name={item.name}
-                className='px-3 py-1 w-100'
+                className='px-2 py- w-100'
               />
               {errors &&<p>{errors[item.name]}</p>}
             </div>
           ))}
-          <div className=''>
-            <button type="submit" disabled={isSubmitting} onClick={onclick1}>Submit</button>
-            <button type="button" onClick={onclick}>Clear</button>
+          <div className='me-2 text-end my-1'>
+          {/* <hr/> */}
+            <button className="mx-1 rounded-2 p-1 px-3 secondary" type="submit" disabled={isSubmitting} onClick={onclick1}>Submit</button>
+            <button className="mx-1 rounded-2 p-1 px-3 primary" type="button" onClick={onclick}>Clear</button>
           </div>
         </Form>
       )}

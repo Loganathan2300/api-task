@@ -22,7 +22,7 @@ const Model = ({
         <Modal.Header closeButton >
           <Modal.Title>{title}</Modal.Title>
         </Modal.Header>
-        <Modal.Body className='mb-2'>{body}</Modal.Body>
+        <Modal.Body className='mb-2 p-2'>{body}</Modal.Body>
         {/* <Modal.Footer>
           <Button variant="secondary" onClick={onClick}>
             {button1}

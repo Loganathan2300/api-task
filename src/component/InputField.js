@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 const InputField = ({ type, onChange, value, name,placeholder,className }) => {
   // px-2 py-1 mx-2 p-0 w-50
   return (
-    <div className="px-2 mx-1 mb-1">
+    <div className="px-2 mx-1 mb-1 p-2">
       <Form.Label >{name?.toUpperCase()}</Form.Label>
       <Form.Control
         type={type}
